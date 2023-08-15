@@ -34,8 +34,6 @@ env:
   PYPI_USERNAME: "__token__"
   PYPI_REPOSITORY_URL: ""
   PUBLISH_PYPI: false
-permissions:
-  contents: write
 jobs:
   publish_binary:
     runs-on: ubuntu-latest
