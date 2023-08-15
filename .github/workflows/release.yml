@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: >-
-          curl -H "Authorization: ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
       - name: Checkout
         uses: actions/checkout@v3
       - name: Unshallow
@@ -53,6 +53,8 @@ jobs:
         with:
           repo: pulumi/pulumictl
           tag: v0.0.32
+      - run: >-
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3.0.0
         timeout-minutes: 360
