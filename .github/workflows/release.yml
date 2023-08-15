@@ -57,12 +57,14 @@ jobs:
           curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3.0.0
-        timeout-minutes: 360
+        continue-on-error: true
         with:
           version: latest
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: >-
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
