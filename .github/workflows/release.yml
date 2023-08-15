@@ -55,6 +55,7 @@ jobs:
           tag: v0.0.32
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3.0.0
+        timeout-minutes: 360
         with:
           version: latest
           args: release --rm-dist
