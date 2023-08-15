@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: >-
-          curl -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" https://api.github.com/rate_limit
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
       - name: Checkout
         uses: actions/checkout@v3
       - name: Unshallow
@@ -52,9 +52,15 @@ jobs:
         with:
           repo: pulumi/pulumictl
           tag: v0.0.32
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v2.0.0
+        with:
+          pulumi-version: 3.76.1
+      - run: pulumi plugin install resource volcengine --server github://api.github.com/volcengine
+      - run: pulumi plugin ls
       - run: >-
-          curl -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" https://api.github.com/rate_limit
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3.0.0
         continue-on-error: true
@@ -62,9 +68,9 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: >-
-          curl -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" https://api.github.com/rate_limit
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/rate_limit
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
