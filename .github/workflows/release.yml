@@ -57,7 +57,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v3.0.0
         timeout-minutes: 360
         with:
-          version: 'v1.18.0'
+          version: latest
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
